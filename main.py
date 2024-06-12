@@ -39,6 +39,8 @@ def read_file_as_image(data) -> np.ndarray:
     image = image.resize((256, 256))
     # Convert the image to a numpy array
     image_array = np.array(image)
+    # Normalize the image
+    image_array = image_array.astype(np.float32) / 255.0
     return image_array
 
 @app.post("/predict")
