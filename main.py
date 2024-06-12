@@ -1,5 +1,5 @@
 import os
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 import numpy as np
@@ -18,7 +18,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["POST"],
+    allow_methods=["POST", "HEAD"],
     allow_headers=["*"],
 )
 
@@ -28,7 +28,7 @@ MODEL = tf.keras.models.load_model(MODEL_PATH, compile=False)
 
 CLASS_NAMES = ["Early Blight", "Late Blight", "Healthy"]
 
-@app.get("/ping")
+@app.head("/ping")
 async def ping():
     return "Hello, I am alive"
 
